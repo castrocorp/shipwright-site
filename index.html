@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipwright — Ticket in, PR out</title>
+  <meta name="description" content="A development workflow engine for Claude Code that automates the entire pipeline from JIRA ticket to Pull Request.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <style>
+    /* Hero-specific (critical) */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: center;
+    }
+    .hero-tagline {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--color-accent);
+      font-weight: 600;
+      margin-bottom: var(--space-lg);
+    }
+    .hero h1 {
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      margin-bottom: var(--space-lg);
+    }
+    .hero-subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2xl);
+      max-width: 500px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .hero-visual {
+      display: flex;
+      justify-content: flex-end;
+    }
+    /* Mobile nav open state */
+    .nav-links.nav-open {
+      display: flex;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(6, 6, 10, 0.95);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xl);
+    }
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .hero-visual {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== Nav ========== -->
+  <nav class="nav">
+    <div class="container">
+      <a href="#" class="nav-logo"><span>&#9875;</span> Shipwright</a>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="#pipeline">Pipeline</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#comparison">Why Shipwright</a></li>
+        <li><a href="#config">Configuration</a></li>
+        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="https://github.com/castrocorp/shipwright" class="nav-cta">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ========== Hero ========== -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">
+            <span class="badge"><span class="badge-dot"></span> v1.2.0 &mdash; Open Source</span>
+          </div>
+          <h1 class="hero-title">Ticket in,<br><span class="gradient-text">PR out.</span></h1>
+          <p class="hero-subtitle">
+            A development workflow engine for Claude Code that automates the entire pipeline &mdash; from JIRA ticket to Pull Request &mdash; with TDD, code review, and Slack tracking built in.
+          </p>
+          <div class="hero-actions">
+            <a href="#quickstart" class="btn btn-primary">Get Started</a>
+            <a href="https://github.com/castrocorp/shipwright" class="btn btn-ghost">
+              View on GitHub &rarr;
+            </a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="pipeline" id="hero-pipeline">
+            <div class="pipeline-step">
+              <span class="step-cmd">/start-task</span>
+              <span class="step-desc">Slack thread + JIRA In Progress</span>
+            </div>
+            <div class="pipeline-arrow">&darr;</div>
+            <div class="pipeline-step">
+              <span class="step-cmd">/analyze-jira</span>
+              <span class="step-desc">Fetch AC, linked tickets</span>
+            </div>
+            <div class="pipeline-arrow">&darr;</div>
+            <div class="pipeline-step">
+              <span class="step-cmd">/create-branch</span>
+              <span class="step-desc">fix/ or feat/ from JIRA type</span>
+            </div>
+            <div class="pipeline-arrow">&darr;</div>
+            <div class="pipeline-step">
+              <span class="step-cmd">/check-lessons</span>
+              <span class="step-desc">Review past incidents</span>
+            </div>
+            <div class="pipeline-arrow">&darr;</div>
+            <div class="pipeline-step">
+              <span class="step-cmd">/tdd-ralph</span>
+              <span class="step-desc">Red &rarr; Green &rarr; Refactor</span>
+            </div>
+            <div class="pipeline-arrow">&darr;</div>
+            <div class="pipeline-step">
+              <span class="step-cmd">/code-review</span>
+              <span class="step-desc">Independent 6-dimension review</span>
+            </div>
+            <div class="pipeline-arrow">&darr;</div>
+            <div class="pipeline-step">
+              <span class="step-cmd">/create-pr</span>
+              <span class="step-desc">Push, PR, JIRA Code Review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Pipeline ========== -->
+  <section class="section" id="pipeline">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">How it works</span>
+        <h2 class="section-title">One ticket. One command.<br>Full pipeline.</h2>
+        <p class="section-subtitle">
+          Give Claude a ticket ID and Shipwright runs every step automatically. No manual intervention until the PR is ready for review.
+        </p>
+      </div>
+
+      <div class="grid-2 reveal" style="margin-top: var(--space-3xl); align-items: start;">
+        <div>
+          <div class="code-block">
+            <button class="code-copy">Copy</button>
+            <code><span class="line-muted"># Single ticket &mdash; full pipeline</span>
+<span class="line-accent">implement XPTO-5311</span>
+
+<span class="line-muted"># Multiple tickets &mdash; parallel worktrees</span>
+<span class="line-accent">/parallel-implement XPTO-101 XPTO-102 XPTO-103</span></code>
+          </div>
+          <div class="stats-row reveal reveal-delay-1">
+            <div class="stat">
+              <div class="stat-value">14</div>
+              <div class="stat-label">Commands</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">2</div>
+              <div class="stat-label">Agents</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">6</div>
+              <div class="stat-label">Rules</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">0</div>
+              <div class="stat-label">Required deps</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card reveal reveal-delay-1">
+            <div class="card-icon">&#8644;</div>
+            <h3 class="card-title">Parallel Execution</h3>
+            <p class="card-text">2-5 tickets simultaneously via isolated git worktrees. Each ticket gets its own branch, agent, and Slack thread.</p>
+          </div>
+          <div class="card reveal reveal-delay-2" style="margin-top: var(--space-lg);">
+            <div class="card-icon">&#9881;</div>
+            <h3 class="card-title">Graceful Degradation</h3>
+            <p class="card-text">Every integration is optional. No Slack? No JIRA? No problem. The core pipeline works with zero MCP servers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Features ========== -->
+  <section class="section" id="features" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Features</span>
+        <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+      </div>
+
+      <div class="grid-3 reveal" style="margin-top: var(--space-3xl);">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">&#9888;</div>
+          <h3 class="card-title">TDD-First</h3>
+          <p class="card-text">Unit tests before implementation, every time. Up to 30 Red-Green-Refactor iterations until all criteria pass.</p>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">&#128269;</div>
+          <h3 class="card-title">Code Review Agent</h3>
+          <p class="card-text">Isolated agent that never sees implementation decisions. Reviews 6 dimensions: standards, bugs, security, history, PRs, smells.</p>
+        </div>
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">&#128196;</div>
+          <h3 class="card-title">JIRA Native</h3>
+          <p class="card-text">Automatic status transitions, acceptance criteria analysis, ticket type detection for branch naming, and linked ticket review.</p>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">&#128172;</div>
+          <h3 class="card-title">Slack Tracking</h3>
+          <p class="card-text">One thread per task. Every pipeline step posts updates. Full audit trail from ticket to merged PR.</p>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">&#128218;</div>
+          <h3 class="card-title">Lessons Learned</h3>
+          <p class="card-text">Record incidents with /record-lesson. Before every implementation, /check-lessons surfaces relevant past mistakes.</p>
+        </div>
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">&#128295;</div>
+          <h3 class="card-title">Stack Adapters</h3>
+          <p class="card-text">Language-specific code quality rules injected into TDD and review. Ships with Kotlin/Spring, extensible via template.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Comparison ========== -->
+  <section class="section" id="comparison">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Why Shipwright</span>
+        <h2 class="section-title">Stop orchestrating.<br>Start shipping.</h2>
+      </div>
+
+      <div class="comparison reveal" style="margin-top: var(--space-3xl);">
+        <div class="comparison-col manual">
+          <h3><span>&#10060;</span> Manual workflow</h3>
+          <ul>
+            <li><span>&#8226;</span> Read JIRA ticket, copy AC manually</li>
+            <li><span>&#8226;</span> Create branch, remember naming convention</li>
+            <li><span>&#8226;</span> Write tests, hope you covered edge cases</li>
+            <li><span>&#8226;</span> Implement, forget to check past incidents</li>
+            <li><span>&#8226;</span> Self-review with your own biases</li>
+            <li><span>&#8226;</span> Create PR, update JIRA, post to Slack</li>
+            <li><span>&#8226;</span> One ticket at a time</li>
+          </ul>
+        </div>
+        <div class="comparison-col shipwright">
+          <h3><span>&#9875;</span> Shipwright</h3>
+          <ul>
+            <li><span>&#10003;</span> AC extracted and cross-referenced automatically</li>
+            <li><span>&#10003;</span> Branch type detected from JIRA ticket type</li>
+            <li><span>&#10003;</span> TDD loop with stack-specific quality rules</li>
+            <li><span>&#10003;</span> Past incidents reviewed before every implementation</li>
+            <li><span>&#10003;</span> Independent 6-dimension agent review</li>
+            <li><span>&#10003;</span> PR, JIRA transition, and Slack &mdash; all automatic</li>
+            <li><span>&#10003;</span> 2-5 tickets in parallel via worktrees</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Config ========== -->
+  <section class="section" id="config" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="grid-2" style="align-items: center;">
+        <div class="reveal">
+          <span class="section-label">Configuration</span>
+          <h2 class="section-title">Four layers.<br>Zero duplication.</h2>
+          <p class="section-subtitle" style="margin-top: var(--space-lg);">
+            Engine rules, universal rules, stack adapters, and project config cascade cleanly. Personal overrides never conflict with shared workflow.
+          </p>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="config-layers">
+            <div class="config-layer">
+              <span class="layer-scope">Engine</span>
+              <span class="layer-file">~/.claude/CLAUDE.md</span>
+              <span class="layer-arrow">All projects</span>
+            </div>
+            <div class="config-layer">
+              <span class="layer-scope">Rules</span>
+              <span class="layer-file">~/.claude/rules/*.md</span>
+              <span class="layer-arrow">Auto-loaded</span>
+            </div>
+            <div class="config-layer">
+              <span class="layer-scope">Stack</span>
+              <span class="layer-file">~/.claude/stacks/{stack}.md</span>
+              <span class="layer-arrow">Per language</span>
+            </div>
+            <div class="config-layer">
+              <span class="layer-scope">Personal</span>
+              <span class="layer-file">~/.claude/CLAUDE.local.md</span>
+              <span class="layer-arrow">Your overrides</span>
+            </div>
+            <div class="config-layer">
+              <span class="layer-scope">Project</span>
+              <span class="layer-file">.claude/project.md</span>
+              <span class="layer-arrow">Per repo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Quick Start ========== -->
+  <section class="section" id="quickstart">
+    <div class="container">
+      <div class="reveal" style="text-align: center; max-width: 640px; margin: 0 auto;">
+        <span class="section-label">Quick Start</span>
+        <h2 class="section-title">Up and running<br>in 60 seconds.</h2>
+      </div>
+
+      <div class="reveal" style="max-width: 640px; margin: var(--space-3xl) auto 0;">
+        <div class="code-block">
+          <button class="code-copy">Copy</button>
+          <code><span class="line-muted"># Clone</span>
+<span class="line-accent">git clone</span> https://github.com/castrocorp/shipwright ~/dotfiles/shipwright
+
+<span class="line-muted"># Install (symlinks into ~/.claude/)</span>
+<span class="line-accent">cd</span> ~/dotfiles/shipwright
+<span class="line-accent">chmod +x</span> install.sh && <span class="line-success">./install.sh</span>
+
+<span class="line-muted"># Initialize your project</span>
+<span class="line-accent">cd</span> /path/to/your/project
+<span class="line-success">/init-project</span>
+
+<span class="line-muted"># Start working</span>
+<span class="line-success">implement XPTO-5311</span></code>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1" style="text-align: center; margin-top: var(--space-2xl);">
+        <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-lg);">
+          All integrations are optional. Works with zero MCP servers.
+        </p>
+        <div style="display: flex; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+          <span class="badge">Slack MCP</span>
+          <span class="badge">Atlassian MCP</span>
+          <span class="badge">gh CLI</span>
+          <span class="badge">ralph-loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="https://github.com/castrocorp/shipwright">GitHub</a></li>
+        <li><a href="https://github.com/castrocorp/shipwright/releases">Releases</a></li>
+        <li><a href="https://github.com/castrocorp/shipwright/blob/main/LICENSE">MIT License</a></li>
+      </ul>
+      <p>Shipwright &mdash; Ticket in, PR out.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
