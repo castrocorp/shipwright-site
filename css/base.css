@@ -46,9 +46,9 @@ body::after {
   z-index: 0;
 }
 
-/* Ambient glow — fixed, spans full viewport */
+/* Ambient glow — absolute in hero, fades out naturally */
 .ambient-glow {
-  position: fixed;
+  position: absolute;
   pointer-events: none;
   z-index: 0;
 }
@@ -63,7 +63,7 @@ body::after {
 }
 
 .ambient-glow--teal {
-  bottom: -200px;
+  bottom: -300px;
   left: -150px;
   width: 500px;
   height: 500px;
