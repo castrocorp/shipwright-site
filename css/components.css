@@ -39,9 +39,10 @@
   letter-spacing: -0.02em;
 }
 
-.nav-logo .logo-mark {
+.logo-icon {
+  height: 22px;
+  width: auto;
   color: var(--color-accent);
-  font-size: 1.2em;
 }
 
 .nav-links {
