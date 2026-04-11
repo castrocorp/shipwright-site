@@ -219,17 +219,18 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: 1.9;
+  padding: var(--space-lg);
 }
 
 .code-block code {
   white-space: pre;
   display: block;
-  padding: var(--space-lg);
+  padding: 0;
   color: var(--color-text-secondary);
   background: none;
   border: none;
   border-radius: 0;
-  font-size: var(--text-sm);
+  font-size: inherit;
 }
 
 .code-block .line-muted { color: var(--color-text-muted); }
@@ -658,9 +659,9 @@
   margin-bottom: var(--space-sm);
 }
 
-.qs-step .code-block code {
-  font-size: var(--text-xs);
+.qs-step .code-block {
   padding: var(--space-md) var(--space-lg);
+  font-size: var(--text-xs);
 }
 
 /* --- Footer --- */
