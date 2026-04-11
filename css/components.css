@@ -201,6 +201,12 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
+  align-items: stretch;
+}
+
+.grid-2 > .code-block {
+  display: flex;
+  align-items: flex-start;
 }
 
 .grid-3 {
