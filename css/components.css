@@ -523,6 +523,15 @@
   opacity: 0.6;
 }
 
+.comparison-col.teal {
+  background: var(--color-teal-subtle);
+}
+
+.comparison-col.teal::before {
+  background: linear-gradient(90deg, transparent, var(--color-teal), transparent);
+  opacity: 0.4;
+}
+
 .comparison-col h3 {
   font-size: var(--text-lg);
   margin-bottom: var(--space-lg);

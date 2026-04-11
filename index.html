@@ -95,6 +95,7 @@
       <button class="nav-mobile-toggle" aria-label="Toggle menu">&#9776;</button>
       <ul class="nav-links">
         <li><a href="#pipeline">Pipeline</a></li>
+        <li><a href="#modes">Modes</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#comparison">Why Shipwright</a></li>
         <li><a href="#config">Configuration</a></li>
@@ -221,8 +222,64 @@
     </div>
   </section>
 
+  <!-- ========== Two Modes ========== -->
+  <section class="section section-alt" id="modes">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Input Modes</span>
+        <h2 class="section-title">JIRA connected?<br>Full RAG pipeline. Without? Just prompt.</h2>
+        <p class="section-subtitle">
+          With MCP servers connected, Shipwright pulls acceptance criteria, linked tickets, and sprint context directly from JIRA &mdash; a full RAG pipeline from your project management tool to implementation. Without them, a structured prompt is all you need.
+        </p>
+      </div>
+
+      <div class="comparison reveal" style="margin-top: var(--space-3xl);">
+        <div class="comparison-col shipwright">
+          <h3>With Atlassian MCP</h3>
+          <div class="code-block" style="margin-top: var(--space-md);">
+            <button class="code-copy">Copy</button>
+            <code><span class="line-accent">implement XPTO-5311</span></code>
+          </div>
+          <ul style="margin-top: var(--space-lg);">
+            <li><span class="marker">&rsaquo;</span> AC fetched from JIRA automatically</li>
+            <li><span class="marker">&rsaquo;</span> Linked tickets and attachments analyzed</li>
+            <li><span class="marker">&rsaquo;</span> Ticket type determines branch prefix</li>
+            <li><span class="marker">&rsaquo;</span> Status transitions (In Progress, Code Review)</li>
+            <li><span class="marker">&rsaquo;</span> Slack thread tracks every pipeline step</li>
+          </ul>
+          <p style="margin-top: var(--space-lg); font-size: var(--text-xs); color: var(--color-text-muted); font-family: var(--font-mono);">
+            JIRA + Slack + GitHub &rarr; full retrieval-augmented pipeline
+          </p>
+        </div>
+        <div class="comparison-col teal">
+          <h3>Without JIRA (prompt-based)</h3>
+          <div class="code-block" style="margin-top: var(--space-md);">
+            <button class="code-copy">Copy</button>
+            <code><span class="line-muted"># Structured prompt replaces JIRA context</span>
+
+<span class="line-teal">implement</span> Add rate limiting to the /api/documents
+endpoint. Limit: 100 req/min per API key.
+
+<span class="line-muted">## Acceptance Criteria</span>
+<span class="line-teal">-</span> Return 429 with Retry-After header
+<span class="line-teal">-</span> Rate tracked per API key, not per IP
+<span class="line-teal">-</span> Configurable via environment variable
+<span class="line-teal">-</span> Existing tests must not break
+
+<span class="line-muted">## Technical Notes</span>
+<span class="line-teal">-</span> Use Redis for distributed counting
+<span class="line-teal">-</span> Follow middleware pattern in src/api/</code>
+          </div>
+          <p style="margin-top: var(--space-lg); font-size: var(--text-xs); color: var(--color-text-muted); font-family: var(--font-mono);">
+            Same pipeline, same quality &mdash; context comes from your prompt
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== Features ========== -->
-  <section class="section section-alt" id="features">
+  <section class="section" id="features">
     <div class="container">
       <div class="reveal">
         <span class="section-label">Features</span>
