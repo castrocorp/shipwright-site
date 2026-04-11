@@ -15,12 +15,35 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--color-text-primary);
   background: var(--color-bg-primary);
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Blueprint dot-grid texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(212, 168, 68, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Film grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.015;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
 }
 
 a {
@@ -34,18 +57,20 @@ a:hover {
 }
 
 h1, h2, h3, h4 {
+  font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 code {
   font-family: var(--font-mono);
-  font-size: 0.9em;
+  font-size: 0.88em;
   background: var(--color-accent-subtle);
   color: var(--color-accent);
-  padding: 0.15em 0.4em;
+  padding: 0.15em 0.45em;
   border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
 }
 
 img {
@@ -56,4 +81,10 @@ img {
 ::selection {
   background: var(--color-accent);
   color: var(--color-bg-primary);
+}
+
+/* Ensure content sits above textures */
+nav, section, footer, main {
+  position: relative;
+  z-index: 1;
 }
