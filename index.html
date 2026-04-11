@@ -375,22 +375,47 @@
         <h2 class="section-title">Up and running<br>in 60 seconds.</h2>
       </div>
 
-      <div class="reveal" style="max-width: 640px; margin: var(--space-3xl) auto 0;">
-        <div class="code-block">
-          <button class="code-copy">Copy</button>
-          <code><span class="line-muted"># Clone</span>
-<span class="line-accent">git clone</span> https://github.com/castrocorp/shipwright ~/dotfiles/shipwright
-
-<span class="line-muted"># Install (symlinks into ~/.claude/)</span>
-<span class="line-accent">cd</span> ~/dotfiles/shipwright
-<span class="line-accent">chmod +x</span> install.sh && <span class="line-success">./install.sh</span>
-
-<span class="line-muted"># Initialize your project</span>
-<span class="line-accent">cd</span> /path/to/your/project
-<span class="line-success">/init-project</span>
-
-<span class="line-muted"># Start working</span>
-<span class="line-success">implement XPTO-5311</span></code>
+      <div class="reveal quickstart-steps">
+        <div class="qs-step">
+          <div class="qs-number">1</div>
+          <div class="qs-content">
+            <div class="qs-label">Clone the repo</div>
+            <div class="code-block">
+              <button class="code-copy">Copy</button>
+              <code>git clone https://github.com/castrocorp/shipwright ~/dotfiles/shipwright</code>
+            </div>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-number">2</div>
+          <div class="qs-content">
+            <div class="qs-label">Install</div>
+            <div class="code-block">
+              <button class="code-copy">Copy</button>
+              <code>cd ~/dotfiles/shipwright && ./install.sh</code>
+            </div>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-number">3</div>
+          <div class="qs-content">
+            <div class="qs-label">Initialize your project</div>
+            <div class="code-block">
+              <button class="code-copy">Copy</button>
+              <code>cd /path/to/your/project
+/init-project</code>
+            </div>
+          </div>
+        </div>
+        <div class="qs-step">
+          <div class="qs-number">4</div>
+          <div class="qs-content">
+            <div class="qs-label">Start working</div>
+            <div class="code-block">
+              <button class="code-copy">Copy</button>
+              <code>implement XPTO-5311</code>
+            </div>
+          </div>
         </div>
       </div>
 
