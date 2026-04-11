@@ -565,6 +565,34 @@
 .comparison-col.manual .marker { color: var(--color-text-muted); }
 .comparison-col.shipwright .marker { color: var(--color-accent); }
 
+/* --- Safe Install Grid --- */
+.safe-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+
+.safe-grid .card {
+  display: flex;
+  flex-direction: column;
+}
+
+.safe-grid .card-text {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .safe-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .safe-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* --- Quick Start Steps --- */
 .quickstart-steps {
   max-width: 580px;

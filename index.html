@@ -479,30 +479,26 @@ endpoint. Limit: 100 req/min per API key.
         </p>
       </div>
 
-      <div class="grid-2 reveal" style="margin-top: var(--space-3xl);">
-        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
-          <div class="card reveal reveal-delay-1">
-            <div class="card-icon">&gt;_</div>
-            <h3 class="card-title">Per-file merge</h3>
-            <p class="card-text">Engine rules are symlinked individually into <code>~/.claude/rules/</code> and <code>stacks/</code>. Your personal files coexist side by side &mdash; never overwritten.</p>
-          </div>
-          <div class="card reveal reveal-delay-2">
-            <div class="card-icon">.local</div>
-            <h3 class="card-title">Personal overrides</h3>
-            <p class="card-text">Your preferences go in <code>CLAUDE.local.md</code>, loaded after the engine. Conflicts resolve in your favor. The engine defines the workflow; you define the style.</p>
-          </div>
+      <div class="safe-grid reveal" style="margin-top: var(--space-3xl);">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">&gt;_</div>
+          <h3 class="card-title">Per-file merge</h3>
+          <p class="card-text">Engine rules are symlinked individually into <code>rules/</code> and <code>stacks/</code>. Your files coexist side by side &mdash; never overwritten.</p>
         </div>
-        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
-          <div class="card reveal reveal-delay-3">
-            <div class="card-icon">rm</div>
-            <h3 class="card-title">Clean uninstall</h3>
-            <p class="card-text">Run <code>./uninstall.sh</code> and only engine symlinks are removed. Settings, plugins, projects, memories, and your personal files stay untouched.</p>
-          </div>
-          <div class="card reveal reveal-delay-4">
-            <div class="card-icon">gpg</div>
-            <h3 class="card-title">Signed releases</h3>
-            <p class="card-text">Every release tag is GPG-signed. The updater verifies the signature before applying changes. Invalid or untrusted signatures block the update and warn of potential compromise.</p>
-          </div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">rm</div>
+          <h3 class="card-title">Clean uninstall</h3>
+          <p class="card-text">Run <code>./uninstall.sh</code> and only engine symlinks are removed. Your personal files stay untouched.</p>
+        </div>
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">.local</div>
+          <h3 class="card-title">Personal overrides</h3>
+          <p class="card-text"><code>CLAUDE.local.md</code> loads after the engine. Conflicts resolve in your favor.</p>
+        </div>
+        <div class="card reveal reveal-delay-4">
+          <div class="card-icon">gpg</div>
+          <h3 class="card-title">Signed releases</h3>
+          <p class="card-text">GPG-verified tags. Invalid signatures block the update automatically.</p>
         </div>
       </div>
 
