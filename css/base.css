@@ -46,28 +46,17 @@ body::after {
   z-index: 0;
 }
 
-/* Ambient glow — absolute in hero, fades out naturally */
-.ambient-glow {
+/* Hero glow — background gradient that fades to page color */
+.hero-glow {
   position: absolute;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
-}
-
-.ambient-glow--amber {
-  top: -200px;
-  right: -150px;
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 65%);
-  opacity: 0.2;
-}
-
-.ambient-glow--teal {
-  bottom: -300px;
-  left: -150px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(45, 212, 191, 0.06) 0%, transparent 65%);
+  background:
+    radial-gradient(ellipse 60% 50% at 75% 20%, var(--color-accent-glow), transparent),
+    radial-gradient(ellipse 50% 40% at 15% 80%, rgba(45, 212, 191, 0.05), transparent);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
 
 a {
