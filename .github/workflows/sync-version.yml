@@ -1,0 +1,38 @@
+name: Sync version badge
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # every 6 hours
+  workflow_dispatch:        # manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest release version
+        id: version
+        run: |
+          LATEST=$(curl -s https://api.github.com/repos/castrocorp/shipwright/releases/latest | jq -r .tag_name | sed 's/^v//')
+          echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
+          CURRENT=$(grep -oP 'v\K[0-9]+\.[0-9]+\.[0-9]+(?= &mdash; Open Source)' index.html || echo "")
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+
+      - name: Update badge if version differs
+        if: steps.version.outputs.latest != steps.version.outputs.current && steps.version.outputs.latest != ''
+        run: |
+          sed -i "s/v${{ steps.version.outputs.current }} \&mdash; Open Source/v${{ steps.version.outputs.latest }} \&mdash; Open Source/" index.html
+          echo "Updated badge: ${{ steps.version.outputs.current }} → ${{ steps.version.outputs.latest }}"
+
+      - name: Commit and push
+        if: steps.version.outputs.latest != steps.version.outputs.current && steps.version.outputs.latest != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "chore: sync version badge to v${{ steps.version.outputs.latest }}"
+          git push
