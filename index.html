@@ -479,26 +479,35 @@ endpoint. Limit: 100 req/min per API key.
         </p>
       </div>
 
-      <div class="grid-3 reveal" style="margin-top: var(--space-3xl);">
-        <div class="card reveal reveal-delay-1">
-          <div class="card-icon">&gt;_</div>
-          <h3 class="card-title">Per-file merge</h3>
-          <p class="card-text">Engine rules are symlinked individually into <code>~/.claude/rules/</code> and <code>stacks/</code>. Your personal files coexist side by side &mdash; never overwritten.</p>
+      <div class="grid-2 reveal" style="margin-top: var(--space-3xl);">
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div class="card reveal reveal-delay-1">
+            <div class="card-icon">&gt;_</div>
+            <h3 class="card-title">Per-file merge</h3>
+            <p class="card-text">Engine rules are symlinked individually into <code>~/.claude/rules/</code> and <code>stacks/</code>. Your personal files coexist side by side &mdash; never overwritten.</p>
+          </div>
+          <div class="card reveal reveal-delay-2">
+            <div class="card-icon">.local</div>
+            <h3 class="card-title">Personal overrides</h3>
+            <p class="card-text">Your preferences go in <code>CLAUDE.local.md</code>, loaded after the engine. Conflicts resolve in your favor. The engine defines the workflow; you define the style.</p>
+          </div>
         </div>
-        <div class="card reveal reveal-delay-2">
-          <div class="card-icon">.local</div>
-          <h3 class="card-title">Personal overrides</h3>
-          <p class="card-text">Your preferences go in <code>CLAUDE.local.md</code>, loaded after the engine. Conflicts resolve in your favor. The engine defines the workflow; you define the style.</p>
-        </div>
-        <div class="card reveal reveal-delay-3">
-          <div class="card-icon">rm</div>
-          <h3 class="card-title">Clean uninstall</h3>
-          <p class="card-text">Run <code>./uninstall.sh</code> and only engine symlinks are removed. Settings, plugins, projects, memories, and your personal files stay untouched.</p>
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div class="card reveal reveal-delay-3">
+            <div class="card-icon">rm</div>
+            <h3 class="card-title">Clean uninstall</h3>
+            <p class="card-text">Run <code>./uninstall.sh</code> and only engine symlinks are removed. Settings, plugins, projects, memories, and your personal files stay untouched.</p>
+          </div>
+          <div class="card reveal reveal-delay-4">
+            <div class="card-icon">gpg</div>
+            <h3 class="card-title">Signed releases</h3>
+            <p class="card-text">Every release tag is GPG-signed. The updater verifies the signature before applying changes. Invalid or untrusted signatures block the update and warn of potential compromise.</p>
+          </div>
         </div>
       </div>
 
-      <div class="reveal reveal-delay-2" style="margin-top: var(--space-2xl);">
-        <div class="code-block" style="max-width: 580px;">
+      <div class="grid-2 reveal" style="margin-top: var(--space-xl);">
+        <div class="code-block">
           <code><span class="line-muted"># What the installer NEVER touches:</span>
 ~/.claude/CLAUDE.local.md     <span class="line-muted"># your overrides</span>
 ~/.claude/settings.json       <span class="line-muted"># your settings</span>
@@ -506,6 +515,14 @@ endpoint. Limit: 100 req/min per API key.
 ~/.claude/projects/           <span class="line-muted"># your memories</span>
 ~/.claude/rules/my-rule.md    <span class="line-muted"># your personal rules</span>
 ~/.claude/stacks/my-stack.md  <span class="line-muted"># your custom stacks</span></code>
+        </div>
+        <div class="code-block">
+          <code><span class="line-muted"># Update verification flow:</span>
+<span class="line-accent">./update.sh --check</span>
+
+<span class="line-success">Signature: VERIFIED</span>         <span class="line-muted"># signed + trusted</span>
+<span class="line-warn">Signature: NOT SIGNED</span>       <span class="line-muted"># asks confirmation</span>
+<span class="line-accent" style="color: var(--color-error)">Signature: FAILED</span>           <span class="line-muted"># blocks update</span></code>
         </div>
       </div>
     </div>
