@@ -40,9 +40,10 @@
 }
 
 .logo-icon {
-  height: 22px;
-  width: auto;
+  height: 20px;
+  width: 17px;
   color: var(--color-accent);
+  flex-shrink: 0;
 }
 
 .nav-links {
