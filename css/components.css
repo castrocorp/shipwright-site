@@ -231,14 +231,14 @@
   white-space: pre;
   display: block;
   padding: 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   background: none;
   border: none;
   border-radius: 0;
   font-size: inherit;
 }
 
-.code-block .line-muted { color: var(--color-text-muted); }
+.code-block .line-muted { color: var(--color-text-secondary); }
 .code-block .line-accent { color: var(--color-accent); }
 .code-block .line-success { color: var(--color-success); }
 .code-block .line-teal { color: var(--color-teal); }
