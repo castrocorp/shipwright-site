@@ -96,8 +96,7 @@
 }
 
 .section-alt {
-  background:
-    linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+  background: none;
 }
 
 .section-label {
