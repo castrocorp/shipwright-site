@@ -226,6 +226,10 @@
   display: block;
   padding: var(--space-lg);
   color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  border-radius: 0;
+  font-size: var(--text-sm);
 }
 
 .code-block .line-muted { color: var(--color-text-muted); }
