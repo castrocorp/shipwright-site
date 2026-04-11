@@ -46,6 +46,30 @@ body::after {
   z-index: 0;
 }
 
+/* Ambient glow — fixed, spans full viewport */
+.ambient-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-glow--amber {
+  top: -200px;
+  right: -150px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 65%);
+  opacity: 0.2;
+}
+
+.ambient-glow--teal {
+  bottom: -200px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.06) 0%, transparent 65%);
+}
+
 a {
   color: var(--color-accent);
   text-decoration: none;
